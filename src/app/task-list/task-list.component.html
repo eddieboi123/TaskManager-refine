@@ -1,0 +1,46 @@
+<div class="container mt-4">
+        <div class="d-flex justify-content-center mb-4">
+          <button (click)="setFilter('all')" class="btn btn-outline-primary mx-2">All Tasks</button>
+          <button (click)="setFilter('active')" class="btn btn-outline-warning mx-2">Active Tasks</button>
+          <button (click)="setFilter('completed')" class="btn btn-outline-success mx-2">Completed Tasks</button>
+        </div>
+      
+        <div class="row">
+          <div *ngFor="let task of task" class="col-12 col-md-6 col-lg-4 mb-3">
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <span *ngIf="!task.isEditing" (click)="task.isEditing = true">{{ task.description }}</span>
+                  <input 
+                    *ngIf="task.isEditing" 
+                    [(ngModel)]="task.description" 
+                    class="form-control" 
+                    (blur)="updateDescription(task)" 
+                    (keyup.enter)="updateDescription(task)" 
+                  />
+                </h5>
+                
+                <p class="card-text text-muted">Task ID: {{ task.id }}</p>
+      
+                <div class="form-check form-switch">
+                  <input 
+                    type="checkbox" 
+                    [(ngModel)]="task.isCompleted" 
+                    class="form-check-input" 
+                    [checked]="task.isCompleted" 
+                    (click)="updateTaskCompletion(task.id)"
+                  >
+                  <label class="form-check-label">Completed</label>
+                </div>
+                
+                <button *ngIf="!task.isEditing" class="btn btn-outline-secondary btn-sm" (click)="editTask(task)">
+                  Edit
+                </button>
+              </div>
+            </div>
+          </div>
+      
+          <p *ngIf="task.length === 0" class="text-center text-muted w-100">No tasks yet</p>
+        </div>
+      </div>
+      
