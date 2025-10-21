@@ -54,4 +54,9 @@ export class TaskService {
       task.isCompleted = !task.isCompleted;
     }
   }
+  getAllTasks(): any[] {
+    return this.properties;
+  }
+  
+  
 }
